@@ -78,30 +78,36 @@
     Iron Hawk Logistics supports different freight needs through dry van, reefer, flatbed, and 26-foot box truck solutions.
   </p>
 
-  <div class="equipment-grid">
-    <article class="equipment-card">
-      <div class="equipment-icon">🚛</div>
-      <h3>53' Dry Van</h3>
-      <p>General freight, retail loads, packaged goods, and standard truckload transportation.</p>
-    </article>
+  <div class="equipment-carousel">
+    <button class="equipment-arrow equipment-prev" type="button" aria-label="Previous equipment">‹</button>
 
-    <article class="equipment-card">
-      <div class="equipment-icon">❄️</div>
-      <h3>Reefer Freight</h3>
-      <p>Temperature-controlled freight support for food, frozen goods, and sensitive products.</p>
-    </article>
+    <div class="equipment-track">
+      <article class="equipment-slide" data-position="0">
+        <div class="equipment-icon">🚛</div>
+        <h3>53' Dry Van</h3>
+        <p>General freight, retail loads, packaged goods, consumer products, palletized freight, and standard truckload transportation.</p>
+      </article>
 
-    <article class="equipment-card">
-      <div class="equipment-icon">🏗️</div>
-      <h3>Flatbed Freight</h3>
-      <p>Flatbed transportation support for construction materials, steel, machinery, and equipment.</p>
-    </article>
+      <article class="equipment-slide active" data-position="1">
+        <div class="equipment-icon">❄️</div>
+        <h3>Reefer Freight</h3>
+        <p>Temperature-controlled freight support for food products, frozen goods, produce, beverages, and sensitive freight requiring climate control.</p>
+      </article>
 
-    <article class="equipment-card">
-      <div class="equipment-icon">📦</div>
-      <h3>26' Box Truck</h3>
-      <p>Local delivery, last-mile freight, expedited loads, and commercial box truck services.</p>
-    </article>
+      <article class="equipment-slide" data-position="2">
+        <div class="equipment-icon">🏗️</div>
+        <h3>Flatbed Freight</h3>
+        <p>Flatbed transportation support for construction materials, steel, lumber, machinery, equipment, and oversized freight needs.</p>
+      </article>
+
+      <article class="equipment-slide" data-position="3">
+        <div class="equipment-icon">📦</div>
+        <h3>26' Box Truck</h3>
+        <p>Local delivery, last-mile freight, expedited loads, commercial deliveries, small business shipments, and city-to-city freight.</p>
+      </article>
+    </div>
+
+    <button class="equipment-arrow equipment-next" type="button" aria-label="Next equipment">›</button>
   </div>
 </section>
 
@@ -139,5 +145,47 @@
   <p>Safe. Reliable. On Time.</p>
   <p>© 2026 Iron Hawk Logistics. All rights reserved.</p>
 </footer>
+
+<script>
+  const equipmentSlides = Array.from(document.querySelectorAll('.equipment-slide'));
+  const prevEquipment = document.querySelector('.equipment-prev');
+  const nextEquipment = document.querySelector('.equipment-next');
+  let equipmentIndex = 1;
+
+  function updateEquipmentCarousel() {
+    equipmentSlides.forEach((slide, i) => {
+      slide.classList.remove('active', 'left', 'right', 'hidden');
+      if (i === equipmentIndex) {
+        slide.classList.add('active');
+      } else if (i === (equipmentIndex - 1 + equipmentSlides.length) % equipmentSlides.length) {
+        slide.classList.add('left');
+      } else if (i === (equipmentIndex + 1) % equipmentSlides.length) {
+        slide.classList.add('right');
+      } else {
+        slide.classList.add('hidden');
+      }
+    });
+  }
+
+  prevEquipment.addEventListener('click', () => {
+    equipmentIndex = (equipmentIndex - 1 + equipmentSlides.length) % equipmentSlides.length;
+    updateEquipmentCarousel();
+  });
+
+  nextEquipment.addEventListener('click', () => {
+    equipmentIndex = (equipmentIndex + 1) % equipmentSlides.length;
+    updateEquipmentCarousel();
+  });
+
+  equipmentSlides.forEach((slide, i) => {
+    slide.addEventListener('click', () => {
+      equipmentIndex = i;
+      updateEquipmentCarousel();
+    });
+  });
+
+  updateEquipmentCarousel();
+</script>
+
 </body>
 </html>
